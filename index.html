@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lakshmi Farm | Fresh Poultry, Milk, Goat, Coconut & Seasonal Produce</title>
+  <meta name="description" content="Direct from Lakshmi Farm: Country eggs, naatu kozhi, fresh cow milk, farm goats, coconuts, tender coconuts, seasonal cashew nuts & panakilangu." />
+  <meta name="theme-color" content="#1B4332" />
+  <link rel="manifest" href="manifest.json" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Identity Services (OAuth 2.0) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FAF8F2; color: #1F2937; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="pb-24 md:pb-8">
+
+  <!-- Top Navigation -->
+  <header class="sticky top-0 z-40 bg-[#1B4332] text-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-2xl shrink-0" aria-hidden="true">🌴</span>
+        <div class="truncate">
+          <h1 class="text-base sm:text-xl font-extrabold tracking-tight leading-none">Lakshmi Farm</h1>
+          <p class="hidden sm:block text-[11px] text-emerald-200 font-medium">Poultry • Dairy • Goat • Coconut & Cashew</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <!-- Header Google Auth Slot -->
+        <div id="header-auth-area" class="flex items-center"></div>
+
+        <!-- Cart Button -->
+        <button onclick="toggleCart()" class="relative bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm flex items-center gap-1.5 transition">
+          <span>🛒 <span class="hidden sm:inline">Basket</span></span>
+          <span id="header-cart-count" class="bg-[#1B4332] text-white text-xs px-2 py-0.5 rounded-full">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-[#1B4332] via-[#2D6A4F] to-[#1B4332] text-white px-4 py-10 md:py-14">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <span class="inline-block bg-amber-400/20 border border-amber-300/40 text-amber-200 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+          🌱 100% Farm-Direct • Natural & Fresh
+        </span>
+        <h2 class="text-3xl md:text-4xl font-extrabold leading-tight mb-3">
+          Pure Village Goodness, Straight From Our Farm to Your Home.
+        </h2>
+        <p class="text-emerald-100 text-sm md:text-base mb-6 leading-relaxed">
+          From our mini poultry, dairy & goat farm, and coconut-cashew grove—fresh milk, country eggs, naatu kozhi, tender coconuts, and seasonal village delicacies.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="#catalog" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm transition shadow-lg">
+            Shop Farm Produce ↓
+          </a>
+          <a href="#farm-units" class="bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold px-5 py-3 rounded-xl text-sm transition">
+            Explore Our 4 Farm Units
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Highlights Card -->
+      <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-5 grid grid-cols-2 gap-3 text-sm">
+        <div class="bg-black/20 rounded-xl p-3.5">
+          <div class="text-2xl mb-1">🐓</div>
+          <div class="font-bold">Mini Poultry</div>
+          <div class="text-xs text-emerald-100">Country Eggs, Cock & Hen</div>
+        </div>
+        <div class="bg-black/20 rounded-xl p-3.5">
+          <div class="text-2xl mb-1">🥛</div>
+          <div class="font-bold">Mini Cow Farm</div>
+          <div class="text-xs text-emerald-100">Fresh Daily Farm Milk</div>
+        </div>
+        <div class="bg-black/20 rounded-xl p-3.5">
+          <div class="text-2xl mb-1">🐐</div>
+          <div class="font-bold">Mini Goat Farm</div>
+          <div class="text-xs text-emerald-100">Healthy Farm-Raised Goats</div>
+        </div>
+        <div class="bg-black/20 rounded-xl p-3.5">
+          <div class="text-2xl mb-1">🥥</div>
+          <div class="font-bold">Coconut & Cashew</div>
+          <div class="text-xs text-emerald-100">Coconuts, Cashew & Panakilangu</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Filter Pills -->
+  <section id="catalog" class="max-w-6xl mx-auto px-4 pt-8 pb-4">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5">
+      <div>
+        <h3 class="text-2xl font-extrabold text-[#1B4332]">Farm Catalog</h3>
+        <p class="text-sm text-gray-600">Select items below to build your WhatsApp order basket.</p>
+      </div>
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Search eggs, milk, goat, panakilangu..."
+        oninput="renderProducts()"
+        class="w-full md:w-72 px-4 py-2.5 rounded-xl border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]"
+      />
+    </div>
+
+    <div id="category-tabs" class="flex gap-2 overflow-x-auto no-scrollbar pb-2"></div>
+  </section>
+
+  <!-- Product Grid -->
+  <main class="max-w-6xl mx-auto px-4 pb-12">
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </main>
+
+  <!-- About Our 4 Farm Units -->
+  <section id="farm-units" class="bg-emerald-950 text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h3 class="text-2xl font-extrabold mb-2 text-center">Inside Lakshmi Farm</h3>
+      <p class="text-emerald-200 text-sm text-center max-w-2xl mx-auto mb-8">
+        Every product comes directly from our own well-cared-for mini farms and orchard—no middlemen, no cold-storage aging.
+      </p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+          <div class="text-3xl mb-2">🥚</div>
+          <h4 class="font-bold text-base mb-1 text-amber-300">Mini Poultry</h4>
+          <p class="text-emerald-100/90 leading-relaxed">Free-range country hens and cocks raised on natural grains and greens, yielding nutrient-rich farm eggs daily.</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+          <div class="text-3xl mb-2">🐄</div>
+          <h4 class="font-bold text-base mb-1 text-amber-300">Mini Cow Farm</h4>
+          <p class="text-emerald-100/90 leading-relaxed">Pure, undiluted morning & evening cow milk collected hygienically for local households and families.</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+          <div class="text-3xl mb-2">🐐</div>
+          <h4 class="font-bold text-base mb-1 text-amber-300">Mini Goat Farm</h4>
+          <p class="text-emerald-100/90 leading-relaxed">Healthy, pasture-fed goats available for family occasions, festivals, and direct farm inspection.</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-5">
+          <div class="text-3xl mb-2">🌰</div>
+          <h4 class="font-bold text-base mb-1 text-amber-300">Coconut & Cashew Grove</h4>
+          <p class="text-emerald-100/90 leading-relaxed">Freshly plucked tender coconuts, mature coconuts, plus seasonal raw/processed cashew nuts & panakilangu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#1B4332] text-emerald-100 py-8 px-4 text-center text-sm">
+    <p class="font-bold text-white text-base mb-1">🌴 Lakshmi Farm</p>
+    <p id="footer-location" class="text-xs text-emerald-200 mb-3"></p>
+    <p class="text-xs text-emerald-300/80">© <span id="year"></span> Lakshmi Farm. Direct Farm Produce.</p>
+  </footer>
+
+  <!-- Mobile Sticky Bottom Bar -->
+  <div id="mobile-cart-bar" class="hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-3 shadow-2xl md:hidden flex items-center justify-between">
+    <div>
+      <p class="text-xs text-gray-500">Your Farm Basket</p>
+      <p class="font-extrabold text-[#1B4332]"><span id="mobile-cart-count">0</span> items • ₹<span id="mobile-cart-total">0</span></p>
+    </div>
+    <button onclick="toggleCart()" class="bg-[#1B4332] text-white font-bold px-5 py-2.5 rounded-xl text-sm">
+      View & Order →
+    </button>
+  </div>
+
+  <!-- Slide-over Cart / Checkout Drawer -->
+  <div id="cart-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex justify-end">
+    <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl">
+      <div class="p-4 bg-[#1B4332] text-white flex items-center justify-between">
+        <div>
+          <h3 class="font-bold text-lg">Your Lakshmi Farm Basket</h3>
+          <p class="text-xs text-emerald-200">Orders are confirmed directly via WhatsApp</p>
+        </div>
+        <button onclick="toggleCart()" class="text-white/80 hover:text-white text-2xl leading-none px-2">&times;</button>
+      </div>
+
+      <!-- Cart Items -->
+      <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+
+      <!-- Checkout Form -->
+      <div class="border-t border-gray-200 p-4 bg-gray-50 space-y-3 overflow-y-auto max-h-[65vh]">
+        <!-- Google Auth Box Inside Checkout -->
+        <div id="drawer-auth-area" class="bg-white border border-gray-200 rounded-xl p-3"></div>
+
+        <div class="flex justify-between items-center text-base font-extrabold text-[#1B4332]">
+          <span>Estimated Total</span>
+          <span>₹<span id="cart-total">0</span></span>
+        </div>
+        <p class="text-[11px] text-gray-500">*Final weight-based items (e.g., live poultry/goats) will be confirmed on call/WhatsApp.</p>
+
+        <input id="cust-name" type="text" placeholder="Your Full Name *" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm bg-white" />
+        <input id="cust-phone" type="tel" placeholder="Mobile Number *" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm bg-white" />
+        <textarea id="cust-address" rows="2" placeholder="Delivery Address / Landmark (or write 'Farm Pickup') *" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm bg-white"></textarea>
+
+        <select id="delivery-slot" class="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm bg-white">
+          <option value="Morning (6:30 AM - 9:30 AM)">🌅 Morning Slot (6:30 AM – 9:30 AM)</option>
+          <option value="Evening (4:30 PM - 7:30 PM)">🌇 Evening Slot (4:30 PM – 7:30 PM)</option>
+          <option value="Farm Visit / Self Pickup">🏡 Farm Visit / Self Pickup</option>
+        </select>
+
+        <button onclick="checkoutWhatsApp()" class="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-extrabold py-3 rounded-xl text-sm flex items-center justify-center gap-2 shadow-md transition">
+          <span>💬 Send Order on WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================
+    // 1. FARM CONFIGURATION (EDIT YOUR DETAILS HERE)
+    // =========================================================
+    const FARM_CONFIG = {
+      whatsappNumber: "919750214487", // <-- Replace with your 91 + 10-digit mobile number
+      googleClientId: "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com", // <-- Paste OAuth 2.0 Web Client ID
+      locationText: "Open Daily: 6:00 AM – 7:00 PM • Direct Farm Pickup & Local Home Delivery"
+    };
+
+    const CATEGORIES = [
+      { id: "all", label: "All Produce" },
+      { id: "poultry", label: "🐓 Mini Poultry" },
+      { id: "dairy_goat", label: "🥛 Milk & 🐐 Goat" },
+      { id: "coconut_cashew", label: "🥥 Coconut & Cashew" },
+      { id: "seasonal", label: "🌱 Seasonal Specials" }
+    ];
+
+    const PRODUCTS = [
+      {
+        id: "eggs",
+        name: "Country Farm Eggs (Naatu Muttai)",
+        category: "poultry",
+        emoji: "🥚",
+        price: 16,
+        unit: "6 Eggs (Half Dozen)",
+        badge: "Daily Fresh",
+        badgeColor: "bg-emerald-100 text-emerald-800",
+        description: "Nutritious, rich-yolk eggs from our free-range country hens.",
+        available: true
+      },
+      {
+        id: "country-hen",
+        name: "Country Hen (Naatu Kozhi)",
+        category: "poultry",
+        emoji: "🐔",
+        price: 600,
+        unit: "Per Kg (Approx. 1.2–1.5 kg bird)",
+        badge: "Mini Poultry",
+        badgeColor: "bg-amber-100 text-amber-800",
+        description: "Healthy farm-raised country hen. Available live or cleaned on request.",
+        available: true
+      },
+      {
+        id: "country-cock",
+        name: "Country Cock (Naatu Seval)",
+        category: "poultry",
+        emoji: "🐓",
+        price: 500,
+        unit: "Per Kg (Approx. 1.5–2 kg bird)",
+        badge: "Mini Poultry",
+        badgeColor: "bg-amber-100 text-amber-800",
+        description: "Naturally fed country cock from our mini poultry unit.",
+        available: true
+      },
+      {
+        id: "cow-milk",
+        name: "Fresh Farm Cow Milk",
+        category: "dairy_goat",
+        emoji: "🥛",
+        price: 50,
+        unit: "1 Litre",
+        badge: "Daily Morning & Evening",
+        badgeColor: "bg-sky-100 text-sky-800",
+        description: "Pure, unpasteurized farm milk with zero preservatives. Ask for monthly milk card!",
+        available: true
+      },
+      {
+        id: "farm-goat",
+        name: "Farm-Raised Goat (Live / Order)",
+        category: "dairy_goat",
+        emoji: "🐐",
+        price: 9500,
+        unit: "Starting Estimate / Goat",
+        badge: "Mini Goat Farm",
+        badgeColor: "bg-orange-100 text-orange-800",
+        description: "Healthy pasture-fed goats. Book an inquiry to check weight, breed & age at the farm.",
+        available: true
+      },
+      {
+        id: "tender-coconut",
+        name: "Tender Coconut (Elaneer)",
+        category: "coconut_cashew",
+        emoji: "🥥",
+        price: 45,
+        unit: "1 Piece",
+        badge: "Freshly Plucked",
+        badgeColor: "bg-emerald-100 text-emerald-800",
+        description: "Naturally sweet, cooling tender coconut harvested fresh from our grove.",
+        available: true
+      },
+      {
+        id: "mature-coconut",
+        name: "Farm Coconut (Cooking / Pooja)",
+        category: "coconut_cashew",
+        emoji: "🌴",
+        price: 50,
+        unit: "1 Kg",
+        badge: "Farm Harvest",
+        badgeColor: "bg-emerald-100 text-emerald-800",
+        description: "Thick-kernel mature coconuts ideal for daily cooking, oil extraction, and pooja.",
+        available: true
+      },
+      {
+        id: "cashew-nut",
+        name: "Farm Cashew Nut (Seasonal)",
+        category: "seasonal",
+        extraCategory: "coconut_cashew",
+        emoji: "🌰",
+        price: 130,
+        unit: "1 Kg",
+        badge: "Seasonal Harvest",
+        badgeColor: "bg-purple-100 text-purple-800",
+        description: "Rich farm-grown unpealed cashew nuts harvested in season. Limited batch!",
+        available: true
+      },
+      {
+        id: "panakilangu",
+        name: "Panakilangu (Palmyra Sprout)",
+        category: "seasonal",
+        extraCategory: "coconut_cashew",
+        emoji: "🌱",
+        price: 100,
+        unit: "Bundle (5–6 Pieces)",
+        badge: "Seasonal Special",
+        badgeColor: "bg-purple-100 text-purple-800",
+        description: "Traditional fiber-rich palmyra tuber sprout. Available fresh raw or boiled in season.",
+        available: true
+      }
+    ];
+
+    // =========================================================
+    // 2. GOOGLE OAUTH 2.0 (GOOGLE IDENTITY SERVICES)
+    // =========================================================
+    let currentUser = JSON.parse(localStorage.getItem("lakshmi_farm_user") || "null");
+    let gisInitialized = false;
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function decodeJwtResponse(token) {
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map(c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
+    }
+
+    function isGoogleConfigured() {
+      return (
+        FARM_CONFIG.googleClientId &&
+        !FARM_CONFIG.googleClientId.startsWith("YOUR_GOOGLE_CLIENT_ID")
+      );
+    }
+
+    function initGoogleAuth() {
+      if (gisInitialized || !isGoogleConfigured()) {
+        updateAuthUI();
+        return;
+      }
+      if (typeof google === "undefined" || !google.accounts || !google.accounts.id) {
+        updateAuthUI();
+        return;
+      }
+
+      google.accounts.id.initialize({
+        client_id: FARM_CONFIG.googleClientId,
+        callback: handleGoogleCredentialResponse,
+        auto_select: false
+      });
+
+      gisInitialized = true;
+      updateAuthUI();
+
+      // Optional Google One Tap if not already signed in
+      if (!currentUser) {
+        google.accounts.id.prompt();
+      }
+    }
+
+    function handleGoogleCredentialResponse(response) {
+      try {
+        const payload = decodeJwtResponse(response.credential);
+        currentUser = {
+          sub: payload.sub,
+          name: payload.name,
+          email: payload.email,
+          picture: payload.picture
+        };
+        localStorage.setItem("lakshmi_farm_user", JSON.stringify(currentUser));
+        prefillCheckoutWithUser();
+        updateAuthUI();
+      } catch (err) {
+        console.error("Failed to decode Google ID token:", err);
+        alert("Could not complete Google Sign-In. Please try again.");
+      }
+    }
+
+    function signOutGoogle() {
+      if (typeof google !== "undefined" && google.accounts && google.accounts.id) {
+        google.accounts.id.disableAutoSelect();
+      }
+      currentUser = null;
+      localStorage.removeItem("lakshmi_farm_user");
+      updateAuthUI();
+    }
+
+    function prefillCheckoutWithUser() {
+      if (!currentUser) return;
+      const nameInput = document.getElementById("cust-name");
+      if (nameInput && !nameInput.value.trim()) {
+        nameInput.value = currentUser.name || "";
+      }
+    }
+
+    function updateAuthUI() {
+      const headerArea = document.getElementById("header-auth-area");
+      const drawerArea = document.getElementById("drawer-auth-area");
+
+      if (currentUser) {
+        const safeName = escapeHtml(currentUser.name);
+        const safeEmail = escapeHtml(currentUser.email);
+        const safePic = escapeHtml(currentUser.picture);
+
+        headerArea.innerHTML = `
+          <div class="flex items-center gap-2 bg-white/10 border border-white/20 rounded-full pl-1.5 pr-2.5 py-1">
+            <img src="${safePic}" alt="${safeName}" referrerpolicy="no-referrer" class="w-6 h-6 rounded-full object-cover" />
+            <span class="hidden md:inline text-xs font-semibold max-w-[110px] truncate">${safeName}</span>
+            <button onclick="signOutGoogle()" title="Sign out" class="text-[11px] text-amber-300 hover:text-amber-200 font-bold ml-1">
+              Sign out
+            </button>
+          </div>
+        `;
+
+        drawerArea.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <img src="${safePic}" alt="${safeName}" referrerpolicy="no-referrer" class="w-8 h-8 rounded-full object-cover shrink-0" />
+              <div class="min-w-0">
+                <p class="text-xs font-bold text-[#1B4332] truncate">✓ ${safeName}</p>
+                <p class="text-[11px] text-gray-500 truncate">${safeEmail}</p>
+              </div>
+            </div>
+            <button onclick="signOutGoogle()" class="text-xs font-semibold text-red-600 hover:underline shrink-0">Sign out</button>
+          </div>
+        `;
+        prefillCheckoutWithUser();
+        return;
+      }
+
+      if (!isGoogleConfigured()) {
+        headerArea.innerHTML = `
+          <button onclick="alert('To enable Google Sign-In, paste your OAuth 2.0 Web Client ID into FARM_CONFIG.googleClientId in index.html.')"
+            class="bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold px-3 py-2 rounded-full transition">
+            G Sign in
+          </button>
+        `;
+        drawerArea.innerHTML = `
+          <div class="text-xs text-gray-600 flex items-center justify-between gap-2">
+            <span>Google Sign-In ready (add Client ID in config).</span>
+          </div>
+        `;
+        return;
+      }
+
+      // Render containers for official Google Sign-In buttons
+      headerArea.innerHTML = `<div id="header-google-btn"></div>`;
+      drawerArea.innerHTML = `
+        <div class="flex flex-col items-center gap-1.5">
+          <p class="text-xs font-semibold text-gray-700">Sign in with Google for faster checkout</p>
+          <div id="drawer-google-btn"></div>
+        </div>
+      `;
+
+      if (gisInitialized) {
+        const headerBtn = document.getElementById("header-google-btn");
+        const drawerBtn = document.getElementById("drawer-google-btn");
+
+        if (headerBtn) {
+          google.accounts.id.renderButton(headerBtn, {
+            theme: "outline",
+            size: "medium",
+            shape: "pill",
+            text: "signin"
+          });
+        }
+        if (drawerBtn) {
+          google.accounts.id.renderButton(drawerBtn, {
+            theme: "filled_blue",
+            size: "medium",
+            shape: "rectangular",
+            text: "continue_with",
+            width: 280
+          });
+        }
+      }
+    }
+
+    // =========================================================
+    // 3. SHOPPING CART & CATALOG LOGIC
+    // =========================================================
+    let activeCategory = "all";
+    let cart = JSON.parse(localStorage.getItem("lakshmi_farm_cart") || "{}");
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("footer-location").textContent = FARM_CONFIG.locationText;
+
+    function saveCart() {
+      localStorage.setItem("lakshmi_farm_cart", JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function setCategory(catId) {
+      activeCategory = catId;
+      renderCategories();
+      renderProducts();
+    }
+
+    function renderCategories() {
+      const container = document.getElementById("category-tabs");
+      container.innerHTML = CATEGORIES.map(cat => {
+        const isActive = activeCategory === cat.id;
+        return `
+          <button onclick="setCategory('${cat.id}')"
+            class="whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition ${
+              isActive
+                ? "bg-[#1B4332] text-white shadow-sm"
+                : "bg-white text-gray-700 border border-gray-200 hover:bg-emerald-50"
+            }">
+            ${cat.label}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderProducts() {
+      const query = document.getElementById("search-input").value.toLowerCase().trim();
+      const grid = document.getElementById("product-grid");
+
+      const filtered = PRODUCTS.filter(p => {
+        const matchesCat =
+          activeCategory === "all" ||
+          p.category === activeCategory ||
+          p.extraCategory === activeCategory;
+        const matchesSearch =
+          p.name.toLowerCase().includes(query) ||
+          p.description.toLowerCase().includes(query);
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">No farm products matched your search.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => {
+        const qty = cart[p.id] || 0;
+        return `
+          <div class="bg-white rounded-2xl border border-emerald-900/10 shadow-xs hover:shadow-md transition p-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-2 mb-3">
+                <div class="w-14 h-14 rounded-2xl bg-[#FAF8F2] border border-amber-200/60 flex items-center justify-center text-3xl">
+                  ${p.emoji}
+                </div>
+                <span class="text-[11px] font-bold px-2.5 py-1 rounded-full ${p.available ? p.badgeColor : 'bg-gray-200 text-gray-600'}">
+                  ${p.available ? p.badge : "Currently Off-Season"}
+                </span>
+              </div>
+
+              <h4 class="font-extrabold text-lg text-[#1B4332] leading-snug mb-1">${p.name}</h4>
+              <p class="text-xs font-medium text-gray-500 mb-2">${p.unit}</p>
+              <p class="text-sm text-gray-600 leading-relaxed mb-4">${p.description}</p>
+            </div>
+
+            <div class="pt-3 border-t border-gray-100 flex items-center justify-between">
+              <div>
+                <span class="text-xl font-extrabold text-gray-900">₹${p.price}</span>
+              </div>
+
+              ${!p.available ? `
+                <span class="text-xs font-semibold text-gray-400">Notify via WhatsApp</span>
+              ` : qty === 0 ? `
+                <button onclick="updateQty('${p.id}', 1)" class="bg-[#1B4332] hover:bg-[#2D6A4F] text-white font-bold px-4 py-2 rounded-xl text-sm transition">
+                  + Add
+                </button>
+              ` : `
+                <div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl p-1">
+                  <button onclick="updateQty('${p.id}', -1)" class="w-7 h-7 rounded-lg bg-white text-[#1B4332] font-bold shadow-xs hover:bg-emerald-100">-</button>
+                  <span class="w-6 text-center font-bold text-sm text-[#1B4332]">${qty}</span>
+                  <button onclick="updateQty('${p.id}', 1)" class="w-7 h-7 rounded-lg bg-[#1B4332] text-white font-bold hover:bg-[#2D6A4F]">+</button>
+                </div>
+              `}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function updateQty(productId, change) {
+      const current = cart[productId] || 0;
+      const next = current + change;
+      if (next <= 0) {
+        delete cart[productId];
+      } else {
+        cart[productId] = next;
+      }
+      saveCart();
+      renderProducts();
+    }
+
+    function updateCartUI() {
+      let totalCount = 0;
+      let totalPrice = 0;
+      const itemsHtml = [];
+
+      for (const [id, qty] of Object.entries(cart)) {
+        const product = PRODUCTS.find(p => p.id === id);
+        if (!product) continue;
+        totalCount += qty;
+        totalPrice += product.price * qty;
+
+        itemsHtml.push(`
+          <div class="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-xl p-3">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">${product.emoji}</span>
+              <div>
+                <p class="font-bold text-sm text-gray-900">${product.name}</p>
+                <p class="text-xs text-gray-500">₹${product.price} × ${qty} = ₹${product.price * qty}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="updateQty('${id}', -1)" class="w-7 h-7 rounded-lg bg-white border border-gray-300 font-bold text-sm">-</button>
+              <span class="w-5 text-center text-sm font-bold">${qty}</span>
+              <button onclick="updateQty('${id}', 1)" class="w-7 h-7 rounded-lg bg-[#1B4332] text-white font-bold text-sm">+</button>
+            </div>
+          </div>
+        `);
+      }
+
+      document.getElementById("header-cart-count").textContent = totalCount;
+      document.getElementById("mobile-cart-count").textContent = totalCount;
+      document.getElementById("mobile-cart-total").textContent = totalPrice;
+      document.getElementById("cart-total").textContent = totalPrice;
+
+      const mobileBar = document.getElementById("mobile-cart-bar");
+      if (totalCount > 0) {
+        mobileBar.classList.remove("hidden");
+      } else {
+        mobileBar.classList.add("hidden");
+      }
+
+      document.getElementById("cart-items-container").innerHTML =
+        itemsHtml.length > 0
+          ? itemsHtml.join("")
+          : `<div class="text-center py-12 text-gray-400 text-sm">Your basket is empty.<br/>Add eggs, milk, coconuts or seasonal items!</div>`;
+    }
+
+    function toggleCart() {
+      const modal = document.getElementById("cart-modal");
+      modal.classList.toggle("hidden");
+      if (!modal.classList.contains("hidden")) {
+        prefillCheckoutWithUser();
+      }
+    }
+
+    function checkoutWhatsApp() {
+      if (Object.keys(cart).length === 0) {
+        alert("Please add at least one farm item to your basket first.");
+        return;
+      }
+
+      const name = document.getElementById("cust-name").value.trim();
+      const phone = document.getElementById("cust-phone").value.trim();
+      const address = document.getElementById("cust-address").value.trim();
+      const slot = document.getElementById("delivery-slot").value;
+
+      if (!name || !phone || !address) {
+        alert("Please fill in your Name, Mobile Number, and Delivery Address.");
+        return;
+      }
+
+      let lines = [
+        `*🌴 New Order — Lakshmi Farm*`,
+        ``,
+        `*Customer Details:*`,
+        `Name: ${name}`,
+        `Phone: ${phone}`,
+        ...(currentUser ? [`Google Account: ${currentUser.email}`] : []),
+        `Address: ${address}`,
+        `Preferred Slot: ${slot}`,
+        ``,
+        `*Order Items:*`
+      ];
+
+      let total = 0;
+      for (const [id, qty] of Object.entries(cart)) {
+        const p = PRODUCTS.find(item => item.id === id);
+        if (!p) continue;
+        const sub = p.price * qty;
+        total += sub;
+        lines.push(`• ${p.name} (${p.unit}) × ${qty} = ₹${sub}`);
+      }
+
+      lines.push(``, `*Estimated Total: ₹${total}*`);
+      lines.push(`Please confirm availability & delivery time. Thank you!`);
+
+      const url = `https://wa.me/${FARM_CONFIG.whatsappNumber}?text=${encodeURIComponent(lines.join("\n"))}`;
+      window.open(url, "_blank");
+    }
+
+    // Initialize App
+    renderCategories();
+    renderProducts();
+    updateCartUI();
+    updateAuthUI();
+    window.addEventListener("load", initGoogleAuth);
+  </script>
+</body>
+</html>

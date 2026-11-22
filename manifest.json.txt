@@ -1,0 +1,16 @@
+{
+  "name": "Lakshmi Farm - Fresh Farm Store",
+  "short_name": "Lakshmi Farm",
+  "description": "Eggs, Country Poultry, Fresh Cow Milk, Goats, Coconuts, Cashew & Panakilangu.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF8F2",
+  "theme_color": "#1B4332",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2909/2909761.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
